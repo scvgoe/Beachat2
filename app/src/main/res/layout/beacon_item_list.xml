@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/uuid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/beacon_id"/>
+
+    <TextView
+        android:id="@+id/uuid_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/uuid"
+        android:text="@string/exp"/>
+
+    <TextView
+        android:id="@+id/major"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/major"
+        android:layout_below="@+id/uuid"/>
+
+    <TextView
+        android:id="@+id/major_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/uuid"
+        android:layout_toRightOf="@+id/major"
+        android:text="@string/exp"/>
+
+    <TextView
+        android:id="@+id/minor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/minor"
+        android:layout_below="@+id/uuid"
+        android:layout_toRightOf="@+id/major_content"/>
+
+    <TextView
+        android:id="@+id/minor_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/uuid"
+        android:layout_toRightOf="@+id/minor"
+        android:text="@string/exp"/>
+
+    <TextView
+        android:id="@+id/rssi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rssi"
+        android:layout_below="@+id/uuid"
+        android:layout_toRightOf="@+id/minor_content" />
+
+    <TextView
+        android:id="@+id/rssi_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/uuid"
+        android:layout_toRightOf="@+id/rssi"
+        android:text="@string/exp"/>
+
+    <TextView
+        android:id="@+id/tx_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tx_pw"
+        android:layout_below="@+id/uuid"
+        android:layout_toRightOf="@+id/rssi_content"/>
+
+    <TextView
+        android:id="@+id/tx_pw_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/uuid"
+        android:layout_toRightOf="@+id/tx_pw"
+        android:text="@string/exp"/>
+
+    <TextView
+        android:id="@+id/proximity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/proximity"
+        android:layout_below="@+id/tx_pw"/>
+
+    <TextView
+        android:id="@+id/proximity_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/proximity"
+        android:layout_below="@+id/tx_pw"
+        android:layout_toRightOf="@+id/proximity"/>
+
+</RelativeLayout>

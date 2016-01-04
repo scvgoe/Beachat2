@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/main/res"><file name="ic_launcher" path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/main/res/drawable-hdpi/ic_launcher.png" qualifiers="hdpi" type="drawable"/><file name="ic_launcher" path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/main/res/drawable-mdpi/ic_launcher.png" qualifiers="mdpi" type="drawable"/><file name="ic_launcher" path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/main/res/drawable-xhdpi/ic_launcher.png" qualifiers="xhdpi" type="drawable"/><file name="activity_monitoring" path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/main/res/layout/activity_monitoring.xml" qualifiers="" type="layout"/><file name="activity_ranging" path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/main/res/layout/activity_ranging.xml" qualifiers="" type="layout"/><file path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/main/res/values/strings.xml" qualifiers=""><string name="app_name">BeaconReference</string></file><file path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/main/res/values/styles.xml" qualifiers=""><style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style><style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style></file><file path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/main/res/values-v11/styles.xml" qualifiers="v11"><style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+        <!-- API 11 theme customizations can go here. -->
+    </style></file><file path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/main/res/values-v14/styles.xml" qualifiers="v14"><style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- API 14 theme customizations can go here. -->
+    </style></file></source><source path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/build/generated/res/rs/release"/><source path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/build/generated/res/generated/release"/></dataSet><dataSet config="release"><source path="/Users/daesungkim/Desktop/socket.io-android-chat/beacon/src/release/res"/></dataSet><mergedItems/></merger>
