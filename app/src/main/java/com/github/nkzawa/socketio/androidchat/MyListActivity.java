@@ -13,6 +13,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,15 +31,10 @@ import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 public class MyListActivity extends ListActivity implements BeaconConsumer{
-    private TextView text;
-    private List<String> listValues;
-
-
-    private ListView lv;
     private ArrayList<HashMap<String, String>> beaconList;
     private BeaconManager beaconManager;
     private ListAdapter lv_adapter;
-    private final int STOP = 10;
+    private final int STOP = 3;
     private static final ScheduledExecutorService delayed_work = Executors.newSingleThreadScheduledExecutor();
 
     private String TAG_UUID = "uuid";
@@ -49,6 +45,8 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
     private String TAG_PROXIMITY = "proximity";
 
     private String TAG = "MyListActivity";
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,21 +80,20 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
             e.printStackTrace();
         }
 
-        /*text = (TextView) findViewById(R.id.mainText);
-        listValues = new ArrayList<String>();
-        listValues.add("Beacon1");
-        listValues.add("Beacon2");
-        listValues.add("Beacon3");
-        listValues.add("Beacon4");
-        listValues.add("Beacon5");
-
-        // initiate the listadapter
-        ArrayAdapter<String> myAdapter = new ArrayAdapter <String>(this,
-                R.layout.row_layout, R.id.listText, listValues);
-
-        // assign the list adapter
-        setListAdapter(myAdapter);*/
-
+        swipeRefreshLayout= (SwipeRefreshLayout) findViewById(R.id.refreshView);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateList2();
+            }
+        });
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                updateList2();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     // when an item of the list is clicked
@@ -114,7 +111,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
         String remove_dash = beacon_uuid.replace("-", "");
         Log.i(TAG, "remove_dash : " + remove_dash);
 
-        startSignIn(position);
+        startSignIn(beacon_uuid);
     }
 
     @Override
@@ -137,9 +134,9 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
         finish();
     }
 
-    public void startSignIn(int position) {
+    public void startSignIn(String position) {
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("position", Integer.toString(position));
+        intent.putExtra("position", position);
         startActivityForResult(intent, 1);
     }
 
@@ -212,5 +209,30 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
                 new int[] {R.id.uuid_content, R.id.major_content, R.id.minor_content, R.id.rssi_content, R.id.tx_pw_content, R.id.proximity_content});
 
         setListAdapter(lv_adapter);
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void updateList2() {
+        beaconList.clear();
+        try {
+            final Region myRegion = new Region("myRangingUniqueId", null, null, null);
+            beaconManager.startRangingBeaconsInRegion(myRegion);
+            Runnable stop_scan = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Log.i(TAG, "stop the ranging");
+                        beaconManager.stopRangingBeaconsInRegion(myRegion);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+            delayed_work.schedule(stop_scan, STOP, TimeUnit.SECONDS);
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }
