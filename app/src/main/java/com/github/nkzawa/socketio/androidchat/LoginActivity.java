@@ -70,6 +70,14 @@ public class LoginActivity extends Activity {
             }
         });
 
+        Button backButton = (Button) findViewById(R.id.back_button);
+        backButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         mSocket.on("login", onLogin);
     }
 

@@ -116,7 +116,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (Activity.RESULT_OK != resultCode) {
-            finish();
+//            finish(); //when back button is clicked on the LoginActivity, the MyListActivity is still show
             return;
         }
 
@@ -129,7 +129,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
         intent.putExtra("username", mUsername);
         intent.putExtra("numUsers", numUsers);
         setResult(RESULT_OK, intent);
-        finish();
+//        finish(); //same above
     }
 
     public void startSignIn(String position) {
