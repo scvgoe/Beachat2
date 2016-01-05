@@ -1,7 +1,9 @@
 package com.github.nkzawa.socketio.androidchat;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -31,6 +34,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
     private ArrayList<HashMap<String, String>> beaconList;
     private BeaconManager beaconManager;
     private ListAdapter lv_adapter;
+    private TextView guide;
     private final int STOP = 2;
     private static final ScheduledExecutorService delayed_work = Executors.newSingleThreadScheduledExecutor();
 
@@ -50,6 +54,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_list);
 
+        verifyBluetooth();
         beaconManager = BeaconManager.getInstanceForApplication(this);
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24"));
         beaconManager.bind(this);
@@ -92,6 +97,42 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
+    }
+
+    private void verifyBluetooth() {
+        guide = (TextView)findViewById(R.id.mainText);
+        try {
+            if (!BeaconManager.getInstanceForApplication(this).checkAvailability()) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Bluetooth not enabled");
+                builder.setMessage("Please enable bluetooth in settings and restart this application.");
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        guide.setText("Turn on the Bluetooth");
+                    }
+                });
+                builder.show();
+            }
+        }
+        catch (RuntimeException e) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Bluetooth LE not available");
+            builder.setMessage("Sorry, this device does not support Bluetooth LE.");
+            builder.setPositiveButton(android.R.string.ok, null);
+            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    guide.setText("Turn on the Bluetooth");
+                }
+
+            });
+            builder.show();
+
+        }
+
     }
 
     // when an item of the list is clicked
@@ -221,6 +262,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
 
         setListAdapter(lv_adapter);
         swipeRefreshLayout.setRefreshing(false);
+
     }
 
     public void updateList2() {
