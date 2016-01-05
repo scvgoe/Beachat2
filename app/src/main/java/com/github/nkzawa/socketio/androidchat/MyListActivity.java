@@ -89,7 +89,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
             @Override
             public void run() {
                 updateList2();
-                swipeRefreshLayout.setRefreshing(true);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -241,8 +241,8 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
             };
 
             delayed_work.schedule(stop_scan, STOP, TimeUnit.SECONDS);
-            
-        } catch (RemoteException e) {
+        }
+        catch (RemoteException e) {
             e.printStackTrace();
         }
     }
