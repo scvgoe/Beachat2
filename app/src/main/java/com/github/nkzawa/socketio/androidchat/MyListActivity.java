@@ -14,6 +14,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -100,7 +101,6 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
     }
 
     private void verifyBluetooth() {
-        guide = (TextView)findViewById(R.id.mainText);
         try {
             if (!BeaconManager.getInstanceForApplication(this).checkAvailability()) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -110,7 +110,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
                 builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        guide.setText("Turn on the Bluetooth");
+                        Toast.makeText(getApplicationContext(), "Turn on bluetooth", Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.show();
@@ -125,7 +125,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
 
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    guide.setText("Turn on the Bluetooth");
+                    Toast.makeText(getApplicationContext(), "Turn on bluetooth", Toast.LENGTH_SHORT).show();
                 }
 
             });
