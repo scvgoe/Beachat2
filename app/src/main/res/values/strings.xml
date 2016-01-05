@@ -18,6 +18,7 @@
     <string name="message_user_left">%s left</string>
     <string name="user_action_typing">is typing</string>
 
+    <string name="indication">UP swiping to find near beacons</string>
     <string name="beacon_id">BeaconID:</string>
     <string name="major">MAJOR #:</string>
     <string name="minor">, MINOR #:</string>

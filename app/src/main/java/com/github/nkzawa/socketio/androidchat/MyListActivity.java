@@ -31,7 +31,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
     private ArrayList<HashMap<String, String>> beaconList;
     private BeaconManager beaconManager;
     private ListAdapter lv_adapter;
-    private final int STOP = 10;
+    private final int STOP = 4;
     private static final ScheduledExecutorService delayed_work = Executors.newSingleThreadScheduledExecutor();
 
     private String TAG_UUID = "uuid";
