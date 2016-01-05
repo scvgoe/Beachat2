@@ -31,7 +31,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
     private ArrayList<HashMap<String, String>> beaconList;
     private BeaconManager beaconManager;
     private ListAdapter lv_adapter;
-    private final int STOP = 4;
+    private final int STOP = 2;
     private static final ScheduledExecutorService delayed_work = Executors.newSingleThreadScheduledExecutor();
 
     private String TAG_UUID = "uuid";
@@ -78,6 +78,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
         }
 
         swipeRefreshLayout= (SwipeRefreshLayout) findViewById(R.id.refreshView);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -88,7 +89,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
             @Override
             public void run() {
                 updateList2();
-                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(true);
             }
         });
     }
@@ -239,7 +240,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
             };
 
             delayed_work.schedule(stop_scan, STOP, TimeUnit.SECONDS);
-
+            
         } catch (RemoteException e) {
             e.printStackTrace();
         }
