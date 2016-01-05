@@ -31,7 +31,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
     private ArrayList<HashMap<String, String>> beaconList;
     private BeaconManager beaconManager;
     private ListAdapter lv_adapter;
-    private final int STOP = 3;
+    private final int STOP = 10;
     private static final ScheduledExecutorService delayed_work = Executors.newSingleThreadScheduledExecutor();
 
     private String TAG_UUID = "uuid";
@@ -187,7 +187,18 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
                         beacon.put(TAG_RSSI, rssi);
 
                         //Check it's already in the list or not
-                        beaconList.add(beacon);
+                        if(beaconList.size() != collection.size()){
+                            CheckOverlap co = new CheckOverlap();
+                            co.setKey(TAG_UUID);
+                            co.setValue(uuid);
+                            co.setList(beaconList);
+                            co.run();
+                            if(!co.getOverlap()){
+                                beaconList.add(beacon);
+                            }
+                        }
+
+//                        beaconList.add(beacon);
                     }
                 }
 
@@ -234,7 +245,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
         }
     }
 
-    class checkOverlap extends Thread{
+    class CheckOverlap extends Thread{
         private boolean overlap = false;
         private ArrayList<HashMap<String, String>> list;
         private String key;
@@ -260,15 +271,22 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
             value = pValue;
         }
 
-        public boolean overlapcheck(){
-            
-            return getOverlap();
+        public void overlapcheck(){
+            for(HashMap<String, String> hash : list){
+                String listed_uuid = hash.get(key);
+                if(listed_uuid.matches(value)){
+                    setOverlap(true);
+                    Log.i(TAG, "overlap check");
+                }
+            }
+
+            setOverlap(false);
         }
 
         @Override
         public void run(){
             super.run();
-
+            overlapcheck();
         }
     }
 }
