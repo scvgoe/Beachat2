@@ -1,13 +1,5 @@
 package com.github.nkzawa.socketio.androidchat;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -16,11 +8,9 @@ import android.os.RemoteException;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -29,6 +19,13 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MyListActivity extends ListActivity implements BeaconConsumer{
     private ArrayList<HashMap<String, String>> beaconList;
@@ -189,6 +186,7 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
                         beacon.put(TAG_TXPW, tx_pw);
                         beacon.put(TAG_RSSI, rssi);
 
+                        //Check it's already in the list or not
                         beaconList.add(beacon);
                     }
                 }
@@ -233,6 +231,44 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
 
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+    }
+
+    class checkOverlap extends Thread{
+        private boolean overlap = false;
+        private ArrayList<HashMap<String, String>> list;
+        private String key;
+        private String value;
+
+        public boolean getOverlap(){
+            return overlap;
+        }
+
+        public void setOverlap(boolean setValue){
+            overlap = setValue;
+        }
+
+        public void setList(ArrayList<HashMap<String, String>> plist){
+            list = plist;
+        }
+
+        public void setKey(String pKey){
+            key = pKey;
+        }
+
+        public void setValue(String pValue){
+            value = pValue;
+        }
+
+        public boolean overlapcheck(){
+            
+            return getOverlap();
+        }
+
+        @Override
+        public void run(){
+            super.run();
+
         }
     }
 }
