@@ -8,5 +8,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/mainText"
         android:id="@android:id/list"
-        android:background="#aaaaaa" />
+        android:background="#000000" />
 </android.support.v4.widget.SwipeRefreshLayout>
