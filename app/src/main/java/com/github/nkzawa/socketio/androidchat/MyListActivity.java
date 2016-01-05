@@ -100,6 +100,12 @@ public class MyListActivity extends ListActivity implements BeaconConsumer{
         });
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        beaconManager.unbind(this);
+    }
+
     private void verifyBluetooth() {
         try {
             if (!BeaconManager.getInstanceForApplication(this).checkAvailability()) {
